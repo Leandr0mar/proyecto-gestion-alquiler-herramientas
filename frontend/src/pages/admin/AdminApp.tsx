@@ -3,6 +3,7 @@ import { LayoutDashboard, ShieldCheck, TrendingUp, Users, Settings, User, LogOut
 
 // Importamos las vistas del admin (Asegúrate de crear el archivo AdminReportesView.tsx vacío por ahora si aún no lo haces)
 import AdminAuditoriaView from "./AdminAuditoriaView";
+import AdminUsuariosView from "./AdminUsuarioView";
 // import AdminReportesView from "./AdminReportesView"; 
 
 interface SessionUser {
@@ -128,7 +129,7 @@ export function AdminApp({ user, onLogout }: { user: SessionUser; onLogout: () =
 
         {/* Placeholders */}
         {activeNav === "panel"     && <AdminPlaceholderView label="Panel Ejecutivo" />}
-        {activeNav === "usuarios"  && <AdminPlaceholderView label="Gestión de Usuarios" />}
+        {activeNav === "usuarios"  && <AdminUsuariosView />}
         {activeNav === "config"    && <AdminPlaceholderView label="Configuración del Sistema" />}
       </div>
       

@@ -1,5 +1,8 @@
 package com.joba.backend.services;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 import com.joba.backend.models.Usuario;
 import com.joba.backend.repositories.UsuarioRepository;
@@ -30,5 +33,51 @@ public class UsuarioService {
             throw new RuntimeException("Operario no encontrado con el DNI: " + dni);
         }
         return usuario;
+    }
+
+        // Leer todos los usuarios
+    public List<Usuario> listarTodos() {
+        return usuarioRepository.findAll();
+    }
+
+    // Leer un usuario por ID
+    public Optional<Usuario> buscarPorId(Long id) {
+        return usuarioRepository.findById(id);
+    }
+
+    // Crear un nuevo usuario
+    public Usuario crearUsuario(Usuario usuario) {
+        // Aquí podrías encriptar la contraseña antes de guardar si usas Spring Security
+        return usuarioRepository.save(usuario);
+    }
+
+    // Actualizar usuario existente
+    public Usuario actualizarUsuario(Long id, Usuario detallesUsuario) {
+        Usuario usuario = usuarioRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Usuario no encontrado con ID: " + id));
+
+        usuario.setCodUsuario(detallesUsuario.getCodUsuario());
+        usuario.setNombre(detallesUsuario.getNombre());
+        usuario.setApellido(detallesUsuario.getApellido());
+        usuario.setCorreo(detallesUsuario.getCorreo());
+        usuario.setEspecialidad(detallesUsuario.getEspecialidad());
+        usuario.setNivelPermiso(detallesUsuario.getNivelPermiso());
+        usuario.setRoles(detallesUsuario.getRoles());
+        
+        // Solo actualizar contraseña si se envía una nueva
+        if (detallesUsuario.getPassword() != null && !detallesUsuario.getPassword().isEmpty()) {
+            usuario.setPassword(detallesUsuario.getPassword());
+        }
+
+        return usuarioRepository.save(usuario);
+    }
+
+    // Borrado lógico (Cambiar estado)
+    public void cambiarEstadoUsuario(Long id) {
+        Usuario usuario = usuarioRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Usuario no encontrado con ID: " + id));
+        
+        usuario.setEstado(!usuario.isEstado()); // Alterna entre true/false
+        usuarioRepository.save(usuario);
     }
 }
