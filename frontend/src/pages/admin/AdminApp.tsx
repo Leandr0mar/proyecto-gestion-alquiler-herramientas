@@ -13,11 +13,8 @@ interface SessionUser {
 }
 
 const ADMIN_NAV = [
-  { icon: LayoutDashboard, label: "Panel Ejecutivo",   id: "panel"    },
   { icon: ShieldCheck,     label: "Auditoría / Bajas", id: "auditoria"},
-  { icon: TrendingUp,      label: "Reportes",          id: "reportes" },
   { icon: Users,           label: "Usuarios",          id: "usuarios" },
-  { icon: Settings,        label: "Configuración",     id: "config"   },
 ];
 
 // Componente placeholder para las pantallas que no hemos desarrollado (Configuración, Usuarios, etc)
